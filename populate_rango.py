@@ -18,7 +18,7 @@ def populate():
 
         {'title' : 'Learn Python in 10 Minutes',
         'url' : 'http://www.korokithakis.net/tutorials/python/',
-        'views': 1567},
+        'views': 600},
     ]
 
     django_pages = [
