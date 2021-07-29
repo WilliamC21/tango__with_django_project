@@ -1,7 +1,7 @@
 from rango.forms import CategoryForm, PageForm
 from typing import OrderedDict
 from django.core.exceptions import NON_FIELD_ERRORS
-from django.shortcuts import redirect, render, redirect
+from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from rango.models import Category, Page
 from django.urls import reverse
@@ -80,10 +80,11 @@ def add_page(request, category_name_slug):
                 page.category = category
                 page.views = 0
                 page.save()
-
+                print("HERE")
                 return redirect(reverse('rango:show_category', kwargs={'category_name_slug': category_name_slug}))
             else:
                 print(form.error)
 
-        context_dict = {'form' : form, 'category': category}
-        return render(request, 'rango/add_page.html', context = context_dict)
+    context_dict = {'form' : form, 'category': category}
+
+    return render(request, 'rango/add_page.html', context = context_dict)
