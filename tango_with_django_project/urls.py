@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.urls import path
 from django.urls import include
 from rango import views
-from rango import urls
+
 
 urlpatterns = [
     path('', views.index, name='index'),
