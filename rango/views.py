@@ -42,7 +42,7 @@ def show_category(request, category_name_slug):
     except Category.DoesNotExist: #throw exception if no such category
         #avoid doing anything, disaply no category message
         context_dict['category'] = None
-        context_dict['pages'] = None\
+        context_dict['pages'] = None
     
     return render(request, 'rango/category.html', context=context_dict)
 
