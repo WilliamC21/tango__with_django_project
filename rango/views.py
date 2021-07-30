@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from rango.models import Category, Page
 from django.urls import reverse
+from django.contrib.auth import authenticate, login
 
 def index(request):
     #dictionary used to pass into template as context()
@@ -91,6 +92,9 @@ def add_page(request, category_name_slug):
     return render(request, 'rango/add_page.html', context = context_dict)
 
 def register(request):
+
+
+    
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
@@ -120,3 +124,22 @@ def register(request):
                             context= {  'user_form': user_form,
                                         'profile_form': profile_form,
                                         'registered': registered})
+
+def user_login(request): 
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(username=username, password=password)
+
+        if user:
+            if user.is_active:
+                login(request, user)
+                return redirect(reverse('rango:index'))
+            else:
+                return HttpResponse("Your Rango account is disabled.")
+        else: 
+            print(f"Invalid login details: {username}, {password}")
+            return HttpResponse("Invalid login details provided")
+    else:
+        return render(request, 'rango/user_login.html')
