@@ -6,7 +6,8 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from rango.models import Category, Page
 from django.urls import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     #dictionary used to pass into template as context()
@@ -143,3 +144,13 @@ def user_login(request):
             return HttpResponse("Invalid login details provided")
     else:
         return render(request, 'rango/user_login.html')
+
+def user_logout(request):
+    logout(request)
+    return redirect(reverse('rango:index'))
+
+@login_required
+def restricted(request):
+    return HttpResponse("Since you are logged in, you can see this text!")
+
+
